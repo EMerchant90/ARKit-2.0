@@ -86,6 +86,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         plane.position = SCNVector3(-0.2, 0, 0)
         plane.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "cat")
         plane.geometry?.firstMaterial?.isDoubleSided = true
+        plane.eulerAngles = SCNVector3(-45.degreesToRadians(), 20.degreesToRadians(), 45.degreesToRadians())
         sceneView.scene.rootNode.addChildNode(plane)
     }
     
