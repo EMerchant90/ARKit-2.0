@@ -140,13 +140,30 @@ class CanvasViewController: UIViewController, ARSCNViewDelegate {
                                    position: position)
 
       if self.paintButton.isHighlighted {
-
+        // The user IS pressing the "paint" button
+        // Give the shape a shine and set it to the selected color
+        brush.geometry?.firstMaterial?.diffuse.contents = self.brushSettings.color
+        brush.geometry?.firstMaterial?.specular.contents = UIColor.white
+        
+        
         if self.brushSettings.isSpinning {
+          // Spin the shape continuously around the y-axis
+          let rotateAction = SCNAction.rotate(by: 2 * .pi,
+                                              around: SCNVector3(0, 1, 0),
+                                              duration: 2)
+          let rotateForeverAction = SCNAction.repeatForever(rotateAction)
+          brush.runAction(rotateForeverAction)
 
         }
       } else {
-
+        // The user IS NOT pressing the "Paint" button
+        // Set the shape to the cursor color and name
+        brush.geometry?.firstMaterial?.diffuse.contents = UIColor.lightGray
+        brush.name = "cursor"
       }
+      
+      // Paint the shape to the screen
+      self.canvas.scene.rootNode.addChildNode(brush)
 
     }
   }
