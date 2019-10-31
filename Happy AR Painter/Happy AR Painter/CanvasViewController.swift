@@ -130,6 +130,14 @@ class CanvasViewController: UIViewController, ARSCNViewDelegate {
     // and checking the state of the “Paint” button, both of which
     // need to be done in the main queue.
     DispatchQueue.main.async {
+      
+      // Erase any old cursor shapes
+      self.eraseNodes(named: "cursor")
+      
+      // Create the brush
+      let brush = self.createBrush(brushShape: self.brushSettings.shape,
+                                   brushSize: self.brushSettings.size,
+                                   position: position)
 
       if self.paintButton.isHighlighted {
 
