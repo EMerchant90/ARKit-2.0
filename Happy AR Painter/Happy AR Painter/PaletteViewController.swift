@@ -139,7 +139,7 @@ extension PaletteViewController : UIPickerViewDataSource {
   func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
     let pickerLabel = UILabel()
     let titleText: String
-    let titleAttributes: [NSAttributedStringKey: Any]
+    let titleAttributes: [NSAttributedString.Key: Any]
     
     if component == COLOR_COMPONENT {
       titleText = colors[row].name
