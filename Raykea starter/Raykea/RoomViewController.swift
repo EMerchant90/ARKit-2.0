@@ -193,7 +193,7 @@ class RoomViewController: UIViewController, ARSCNViewDelegate {
       let yCoord = CGFloat(y) / CGFloat(screenDivisions) * viewHeight
       for x in 0...screenDivisions {
         let xCoord = CGFloat(x) / CGFloat(screenDivisions) * viewWidth
-        let point = CGPoint(x: xCoord, y: yCoord)
+        _ = CGPoint(x: xCoord, y: yCoord)
 
         // Perform hit test for planes.
 
