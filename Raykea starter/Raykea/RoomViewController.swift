@@ -195,7 +195,7 @@ class RoomViewController: UIViewController, ARSCNViewDelegate {
       let yCoord = CGFloat(y) / CGFloat(screenDivisions) * viewHeight
       for x in 0...screenDivisions {
         let xCoord = CGFloat(x) / CGFloat(screenDivisions) * viewWidth
-        _ = CGPoint(x: xCoord, y: yCoord)
+        let point = CGPoint(x: xCoord, y: yCoord)
 
         // Perform hit test for planes.
 
@@ -217,17 +217,18 @@ class RoomViewController: UIViewController, ARSCNViewDelegate {
     guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
 
     // Draw the appropriate plane over the detected surface.
-    let planeType: String
-    if planeAnchor.alignment == .horizontal {
-      planeType = "horizontal"
-    } else {
-      planeType = "vertical"
-    }
-    print("Found a \(planeType) surface at " +
-      "\(planeAnchor.center.x), " +
-      "\(planeAnchor.center.y), " +
-      "\(planeAnchor.center.z)"
-    )
+    drawPlaneNode(on: node, for: planeAnchor)
+//    let planeType: String
+//    if planeAnchor.alignment == .horizontal {
+//      planeType = "horizontal"
+//    } else {
+//      planeType = "vertical"
+//    }
+//    print("Found a \(planeType) surface at " +
+//      "\(planeAnchor.center.x), " +
+//      "\(planeAnchor.center.y), " +
+//      "\(planeAnchor.center.z)"
+//    )
   }
 
   // This delegate method gets called whenever the node for
@@ -244,6 +245,27 @@ class RoomViewController: UIViewController, ARSCNViewDelegate {
   func drawPlaneNode(on node: SCNNode, for planeAnchor: ARPlaneAnchor) {
     // Create a plane node with the same position and size
     // as the detected plane.
+      let planeNode = SCNNode(geometry: SCNPlane(width: CGFloat(planeAnchor.extent.x),
+                                                 height: CGFloat(planeAnchor.extent.z)))
+      planeNode.position = SCNVector3(planeAnchor.center.x,
+                                      planeAnchor.center.y,
+                                      planeAnchor.center.z)
+      planeNode.geometry?.firstMaterial?.isDoubleSided = true
+      
+      // Align the plane with the anchor.
+      planeNode.eulerAngles = SCNVector3(-Double.pi / 2, 0, 0)
+
+      // Give the plane node the appropriate surface.
+      if planeAnchor.alignment == .horizontal {
+        planeNode.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "grid")
+      } else {
+        planeNode.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "ray")
+        planeNode.name = "vertical"
+      }
+
+      // Add the plane node to the scene.
+      node.addChildNode(planeNode)
+      appState = .readyToFurnish
 
     // Align the plane with the anchor.
 
