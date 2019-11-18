@@ -218,17 +218,17 @@ class RoomViewController: UIViewController, ARSCNViewDelegate {
 
     // Draw the appropriate plane over the detected surface.
     drawPlaneNode(on: node, for: planeAnchor)
-    let planeType: String
-    if planeAnchor.alignment == .horizontal {
-      planeType = "horizontal"
-    } else {
-      planeType = "vertical"
-    }
-    print("Found a \(planeType) surface at " +
-      "\(planeAnchor.center.x), " +
-      "\(planeAnchor.center.y), " +
-      "\(planeAnchor.center.z)"
-    )
+//    let planeType: String
+//    if planeAnchor.alignment == .horizontal {
+//      planeType = "horizontal"
+//    } else {
+//      planeType = "vertical"
+//    }
+//    print("Found a \(planeType) surface at " +
+//      "\(planeAnchor.center.x), " +
+//      "\(planeAnchor.center.y), " +
+//      "\(planeAnchor.center.z)"
+//    )
   }
 
   // This delegate method gets called whenever the node for
